@@ -25,11 +25,8 @@ public class Program
 
             num = num.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
-            int left_nur = Int32.Parse(num[0].Trim(' '));
-            // Console.WriteLine(left_nur);
-            int right_nur = Int32.Parse(num[1].Trim(' '));
-            
-            // Console.WriteLine(right_nur);
+            int left_nur = Int32.Parse(num[0]);
+            int right_nur = Int32.Parse(num[1]);
 
             left_list.Add(left_nur);
             right_list.Add(right_nur);
@@ -54,8 +51,8 @@ public class Program
         return result.Sum();
     }
 
-    public static int solve_2(List<int> left, List<int> right){
-        
+    public static int solve_2(List<int> left, List<int> right)
+    {    
         List<int> result = new List<int>();
         for(int i = 0; i < left.Count; i++){
             int c = right.Where(x => x == left[i]).Count();
@@ -63,6 +60,5 @@ public class Program
         }
 
         return result.Sum();
-
     }
 }
