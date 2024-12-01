@@ -59,7 +59,6 @@ public class Program
         List<int> result = new List<int>();
         for(int i = 0; i < left.Count; i++){
             int c = right.Where(x => x == left[i]).Count();
-            // Console.WriteLine(c * left[i]);
             result.Add(c * left[i]);
         }
 
