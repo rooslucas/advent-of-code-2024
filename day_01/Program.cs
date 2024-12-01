@@ -7,8 +7,10 @@ public class Program
     {
         string file = "./input/day_01.txt"; 
         List<List<int>> parsed = parse(file);
-        int result = solve(parsed[0], parsed[1]);
-        Console.WriteLine(result);
+        int result_1 = solve_1(parsed[0], parsed[1]);
+        int result_2 = solve_2(parsed[0], parsed[1]);
+        Console.WriteLine(result_1);
+        Console.WriteLine(result_2);
     }
 
     public static List<List<int>> parse(string file)
@@ -37,7 +39,8 @@ public class Program
 
     }
 
-    public static int solve(List<int> left, List<int> right)
+// part 1 solving
+    public static int solve_1(List<int> left, List<int> right)
     {
         left.Sort();
         right.Sort();
@@ -49,5 +52,18 @@ public class Program
         }
 
         return result.Sum();
+    }
+
+    public static int solve_2(List<int> left, List<int> right){
+        
+        List<int> result = new List<int>();
+        for(int i = 0; i < left.Count; i++){
+            int c = right.Where(x => x == left[i]).Count();
+            // Console.WriteLine(c * left[i]);
+            result.Add(c * left[i]);
+        }
+
+        return result.Sum();
+
     }
 }
