@@ -6,14 +6,14 @@ public class Program
     public static void Main(string[] args)
     {
         string file = "./input/day_01.txt"; 
-        List<List<int>> parsed = parse(file);
-        int result_1 = solve_1(parsed[0], parsed[1]);
-        int result_2 = solve_2(parsed[0], parsed[1]);
+        var (parsed_l, parsed_r) = parse(file);
+        int result_1 = solve_1(parsed_l, parsed_r);
+        int result_2 = solve_2(parsed_l, parsed_r);
         Console.WriteLine(result_1);
         Console.WriteLine(result_2);
     }
 
-    public static List<List<int>> parse(string file)
+    public static (List<int> Left, List<int> Right) parse(string file)
     {
         string[] lines = File.ReadAllLines(file); 
         List<int> left_list = new List<int>();
@@ -32,7 +32,7 @@ public class Program
             right_list.Add(right_nur);
         }
 
-        return new List<List<int>> { left_list, right_list };
+        return (left_list, right_list);
 
     }
 
