@@ -1,0 +1,14 @@
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.GeneratedMSBuildEditorConfig.editorconfig
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.AssemblyInfoInputs.cache
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.AssemblyInfo.cs
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.csproj.CoreCompileInputs.cache
+/Users/roos/Developer/advent-of-code-2024/day_02/bin/Debug/net7.0/day_02
+/Users/roos/Developer/advent-of-code-2024/day_02/bin/Debug/net7.0/day_02.deps.json
+/Users/roos/Developer/advent-of-code-2024/day_02/bin/Debug/net7.0/day_02.runtimeconfig.json
+/Users/roos/Developer/advent-of-code-2024/day_02/bin/Debug/net7.0/day_02.dll
+/Users/roos/Developer/advent-of-code-2024/day_02/bin/Debug/net7.0/day_02.pdb
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.dll
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/refint/day_02.dll
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.pdb
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/day_02.genruntimeconfig.cache
+/Users/roos/Developer/advent-of-code-2024/day_02/obj/Debug/net7.0/ref/day_02.dll
