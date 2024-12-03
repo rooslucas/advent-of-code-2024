@@ -5,7 +5,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string file = "./input/test.txt";
+        string file = "./input/day_03.txt";
         Part1(file);
         Part2(file);
     }
@@ -33,17 +33,20 @@ public class Program
 
         Regex regex = new Regex(@"(mul\((\d+),(\d+)\))|(don't\(\))|(do\(\))");
         var matches2 = regex.Matches(lines);
-        foreach (var m in matches2) {
-            Console.WriteLine(m);
-        }
         
-        // Regex numReg = new Regex(@"(\d+),(\d+)");
+        Regex numReg = new Regex(@"(\d+),(\d+)");
+        bool enabled = true;
+        int sum = 0;
 
-        // int sum = matches.Select(x => {
-        //     var numbers = numReg.Match(x.ToString()).ToString().Split(',');
-        //     return Int32.Parse(numbers[0]) * Int32.Parse(numbers[1]);
-        // }).Sum();
+        foreach(var x in matches2) {
+            if (x.ToString().Contains("don")) {enabled = false;}
+            else if (x.ToString().Contains("do")) {enabled = true;}
+            else if (enabled) {
+                var numbers = numReg.Match(x.ToString()).ToString().Split(',');
+                sum += Int32.Parse(numbers[0]) * Int32.Parse(numbers[1]);
+                }
+        }
 
-        // Console.WriteLine(sum);
+        Console.WriteLine(sum);
     }
 }
