@@ -6,11 +6,15 @@ public class Program
     public static void Main(string[] args)
     {
         string file = "./input/day_04.txt";
-        string[] parsed = Parse(file);
+        string[] parsed = Parse1(file);
         Part1(parsed);
+
+        char[][] parsed2 = Parse2(file);
+        Part2(parsed2);
+
     }
 
-    public static string[] Parse(string file) {
+    public static string[] Parse1(string file) {
         // make all strings.
             // horizontal
         string[] horizontal = File.ReadAllLines(file);
@@ -75,6 +79,12 @@ public class Program
         return all;
     }
 
+    public static char[][] Parse2(string file) {
+        string[] text2 = File.ReadAllLines(file);
+        char[][] matrix = text2.Select(x => x.ToCharArray()).ToArray();
+        return matrix;
+    }
+
     public static void Part1(string[] parsed) {
 
         int number = parsed.Select(x =>{
@@ -90,22 +100,25 @@ public class Program
         Console.WriteLine(number);
     }
 
-        // for each string get matches
-            // from xmas
-            // from samx
+    public static void Part2(char[][] parsed) {
+        int number = 0;
+        for (int i=0; i < parsed[0].Count(); i++){
+            for (int j=0; j < parsed[0].Count(); j++){
+                if(parsed[i][j] == 'A'){
 
-        // string test = "MXMXAXMASAMX";
+                    if(((i-1)>=0) && ((j-1)>=0) && ((i+1)<parsed[0].Count()) && ((j+1)<parsed[0].Count())){
+                        if( (((parsed[i-1][j-1] == 'M') && (parsed[i+1][j+1] == 'S')) ||
+                            ((parsed[i-1][j-1] == 'S') && (parsed[i+1][j+1] == 'M')))
+                            &&
+                            (((parsed[i-1][j+1] == 'S') && (parsed[i+1][j-1] == 'M')) ||
+                            ((parsed[i-1][j+1] == 'M') && (parsed[i+1][j-1] == 'S'))))
+                        {number += 1;}
+                    }
+                }
+            }
+        }
 
-        // Regex regexXmas = new Regex(@"XMAS");
-        // Regex regexSamx = new Regex(@"SAMX");
-        // var matches1 = regexXmas.Matches(text);
-        // foreach (var m in matches1){
-        //     Console.WriteLine(m);
-        // }
-
-        // var matches2 = regexSamx.Matches(text);
-        // foreach (var m in matches2){
-        //     Console.WriteLine(m);
-        // }
+        Console.WriteLine(number);
+    }
     
 }
