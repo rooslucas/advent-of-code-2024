@@ -4,7 +4,8 @@
     {
         string file = "./input/day_05.txt";
         (Number[], string[]) output = Parse(file);
-        Part1(output.Item1, output.Item2);
+        List<string> wrongUpdates= Part1(output.Item1, output.Item2);
+        Part2(output.Item1, wrongUpdates);
     }
 
     public class Number {
@@ -28,7 +29,6 @@
             }
         }
 
-        // string[] rules = input.Take(indexSplit).ToArray();
         string[] tempRules = input[0..indexSplit];
         string[] updates = input[(indexSplit+1)..^0];
 
@@ -37,14 +37,12 @@
             return new Number(Int32.Parse(spl[0]),Int32.Parse(spl[1]));
             }).ToArray();
 
-        // foreach(string rule in updates) {
-        //     Console.WriteLine(rule);
-        // }
-
         return (rules, updates);
     }
 
-    public static void Part1(Number[] rules, string[] updates){
+    public static List<string> Part1(Number[] rules, string[] updates){
+        List<string> wrongUpdates= updates.ToList();
+
         int middlePageSum = updates.Select(x => {
             string[] tempNums = x.Split(',');
             List<int> nums = tempNums.Select(x => Int32.Parse(x)).ToList();
@@ -52,21 +50,44 @@
             
             for(int n=0; n < nums.Count(); n++) {
                 List<int> relevant = rules.Select(x => {if (x.number2 == nums[n]) {return x.number1;} return 0;}).ToList();
-
                 nums.Remove(nums[n]);
-
                 int check = nums.Select(x => {if(relevant.Contains(x)) {return 0;} return 1;}).Sum();
-
                 if (check <= (nums.Count - 1)) {return 0;}
                 if (nums.Count() > 1)
                     {n--;}
             }
-
-            Console.WriteLine(middle);
+            wrongUpdates.Remove(x);
             return middle;
         }).Sum();
 
         Console.WriteLine(middlePageSum);
+
+        return wrongUpdates;
     }
+
+    public static void Part2(Number[] rules, List<string> wrongUpdates){
+        int middlePageSum = wrongUpdates.Select( x => {
+            string[] tempNums = x.Split(',');
+            List<int> nums = tempNums.Select(x => Int32.Parse(x)).ToList();
+            
+            for(int n=(nums.Count()-1); n > 0; n--) {
+                List<int> relevant = rules.Select(x => {if (x.number1 == nums[n]) {return x.number2;} return 0;}).ToList();
+
+                for(int y=0; y < n; y++){
+                    if(relevant.Contains(nums[y])) {
+                        int temp = nums[n];
+                        nums.Remove(temp);
+                        nums.Insert(y, temp);
+                        n++;
+                        break;
+                    }
+                }
+            }
+            return nums[(nums.Count()/2)];    
+        }).Sum();
+
+        Console.WriteLine(middlePageSum);
+    }
+    
 }
 
