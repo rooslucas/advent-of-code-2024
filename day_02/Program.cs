@@ -20,11 +20,7 @@ public class Program
     public static void SolvingPart1(IEnumerable<int>[] parsed)
     {
         int safe = parsed.Select(x =>
-        {
-
-            var t = x.ToList();
-            return ValidList(t);
-        }).ToList().Sum();
+        ValidList(x.ToList())).Sum();
 
         Console.WriteLine(safe);
     }
