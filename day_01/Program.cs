@@ -21,30 +21,25 @@ public class Program
 
         foreach (string line in lines)
         {
-            List<string> num = line.Split(' ').ToList();
+            List<string> num = line.Split(' ')
+                .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
-            num = num.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
-
-            int left_nur = Int32.Parse(num[0]);
-            int right_nur = Int32.Parse(num[1]);
-
-            left_list.Add(left_nur);
-            right_list.Add(right_nur);
+            left_list.Add(Int32.Parse(num[0]));
+            right_list.Add(Int32.Parse(num[1]));
         }
 
         return (left_list, right_list);
-
     }
 
     public static int solve_1(List<int> left, List<int> right)
     {
         left.Sort();
         right.Sort();
-        return Enumerable.Range(0, left.Count()).Select(i => Math.Abs(left[i] - right[i])).Sum();
+        return Enumerable.Range(0, left.Count).Select(i => Math.Abs(left[i] - right[i])).Sum();
     }
 
     public static int solve_2(List<int> left, List<int> right)
     {
-        return Enumerable.Range(0, left.Count()).Select(i => right.Where(x => x == left[i]).Count() * left[i]).Sum();
+        return Enumerable.Range(0, left.Count).Select(i => right.Where(x => x == left[i]).Count() * left[i]).Sum();
     }
 }
