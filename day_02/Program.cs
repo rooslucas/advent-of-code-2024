@@ -1,5 +1,5 @@
 ﻿
-public class Program 
+public class Program
 {
     public static void Main(string[] args)
     {
@@ -9,22 +9,21 @@ public class Program
 
     }
 
-    public static IEnumerable<int>[] Parse(string file) 
+    public static IEnumerable<int>[] Parse(string file)
     {
-        string[] lines = File.ReadAllLines(file); 
-        var split = lines.Select(x => x.Split(' '));
-        IEnumerable<int>[] parsed = split.Select(x => x.Select(y => Int32.Parse(y))).ToArray();
-
-        return parsed;
+        return File.ReadAllLines(file)
+            .Select(x => x.Split(' '))
+            .Select(x => x.Select(y => Int32.Parse(y))).ToArray();
 
     }
 
-    public static void SolvingPart1(IEnumerable<int>[] parsed) 
+    public static void SolvingPart1(IEnumerable<int>[] parsed)
     {
-        int safe = parsed.Select( x => {
-        
-        var t = x.ToList();
-        return ValidList(t);
+        int safe = parsed.Select(x =>
+        {
+
+            var t = x.ToList();
+            return ValidList(t);
         }).ToList().Sum();
 
         Console.WriteLine(safe);
@@ -32,51 +31,64 @@ public class Program
 
     public static void SolvingPart2(IEnumerable<int>[] parsed)
     {
-        int safe = parsed.Select( x => {
+        int safe = parsed.Select(x =>
+        {
             List<int> t = x.ToList();
 
-            if (ValidList(t) == 0){
+            if (ValidList(t) == 0)
+            {
 
-                for(int i = 0; i < x.Count(); i++) {
+                for (int i = 0; i < x.Count(); i++)
+                {
                     List<int> q = x.ToList();
                     q.RemoveAt(i);
-                    if (ValidList(q) == 1){
-                        return 1;}
-                    
+                    if (ValidList(q) == 1)
+                    {
+                        return 1;
+                    }
+
                 }
             }
-            else { return 1;}
+            else { return 1; }
             return 0;
         }).ToList().Sum();
 
         Console.WriteLine(safe);
-        
+
     }
 
-    public static int ValidList(List<int> t){
+    public static int ValidList(List<int> t)
+    {
         int r = 0;
         bool asc = false;
         bool desc = false;
 
-        if((t[0] - t[1]) > 0) {asc = true;}
-        else if((t[0] - t[1]) < 0) {desc = true;}
-        else{return 0;}
+        if ((t[0] - t[1]) > 0) { asc = true; }
+        else if ((t[0] - t[1]) < 0) { desc = true; }
+        else { return 0; }
 
-        for(int i = 0; i < t.Count() - 1; i++) {
+        for (int i = 0; i < t.Count() - 1; i++)
+        {
 
-            if (desc) {
-                if(((t[i] - t[i+1]) >= -3) && ((t[i] - t[i+1]) < 0)) {
-                    r += 1;}
-                else {return 0;}
+            if (desc)
+            {
+                if (((t[i] - t[i + 1]) >= -3) && ((t[i] - t[i + 1]) < 0))
+                {
+                    r += 1;
                 }
-            
-            else if (asc) {
-                if(((t[i] - t[i+1]) <= 3) && ((t[i] - t[i+1]) > 0)) {
-                    r += 1;}
-                else {return 0;}
+                else { return 0; }
+            }
+
+            else if (asc)
+            {
+                if (((t[i] - t[i + 1]) <= 3) && ((t[i] - t[i + 1]) > 0))
+                {
+                    r += 1;
                 }
-            else {return 0;}
- 
+                else { return 0; }
+            }
+            else { return 0; }
+
 
         }
         return 1;
