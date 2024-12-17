@@ -9,45 +9,29 @@ public class Program
 
     }
 
-    public static IEnumerable<int>[] Parse(string file)
+    public static List<List<int>> Parse(string file)
     {
         return File.ReadAllLines(file)
             .Select(x => x.Split(' '))
-            .Select(x => x.Select(y => Int32.Parse(y))).ToArray();
+            .Select(x => x.Select(y => Int32.Parse(y)).ToList())
+            .ToList();
 
     }
 
-    public static void SolvingPart1(IEnumerable<int>[] parsed)
+    public static void SolvingPart1(List<List<int>> parsed)
     {
         int safe = parsed.Select(x =>
-        ValidList(x.ToList())).Sum();
+        ValidList(x)).Sum();
 
         Console.WriteLine(safe);
     }
 
-    public static void SolvingPart2(IEnumerable<int>[] parsed)
+    public static void SolvingPart2(List<List<int>> parsed)
     {
-        int safe = parsed.Select(x =>
-        {
-            List<int> t = x.ToList();
-
-            if (ValidList(t) == 0)
-            {
-
-                for (int i = 0; i < x.Count(); i++)
-                {
-                    List<int> q = x.ToList();
-                    q.RemoveAt(i);
-                    if (ValidList(q) == 1)
-                    {
-                        return 1;
-                    }
-
-                }
-            }
-            else { return 1; }
-            return 0;
-        }).ToList().Sum();
+        int safe = parsed.Select(x => ValidList(x) == 1 ? 1 :
+            (Enumerable.Range(0, x.Count)
+                .Where(i => ValidList(SkipAt(x, i)) == 1)
+                .Count() > 0 ? 1 : 0)).Sum();
 
         Console.WriteLine(safe);
 
@@ -55,39 +39,23 @@ public class Program
 
     public static int ValidList(List<int> t)
     {
-        int r = 0;
-        bool asc = false;
-        bool desc = false;
 
-        if ((t[0] - t[1]) > 0) { asc = true; }
-        else if ((t[0] - t[1]) < 0) { desc = true; }
-        else { return 0; }
+        bool asc = (t[0] - t[1]) > 0;
+        bool desc = (t[0] - t[1]) < 0;
 
-        for (int i = 0; i < t.Count() - 1; i++)
+        int r = Enumerable.Range(0, t.Count - 1).Select(i =>
         {
+            if (desc) { return ((t[i] - t[i + 1]) >= -3) && ((t[i] - t[i + 1]) < 0) ? 1 : 0; }
+            else if (asc) { return ((t[i] - t[i + 1]) <= 3) && ((t[i] - t[i + 1]) > 0) ? 1 : 0; }
+            return 0;
+        }).Sum();
 
-            if (desc)
-            {
-                if (((t[i] - t[i + 1]) >= -3) && ((t[i] - t[i + 1]) < 0))
-                {
-                    r += 1;
-                }
-                else { return 0; }
-            }
+        return r == (t.Count - 1) ? 1 : 0;
+    }
 
-            else if (asc)
-            {
-                if (((t[i] - t[i + 1]) <= 3) && ((t[i] - t[i + 1]) > 0))
-                {
-                    r += 1;
-                }
-                else { return 0; }
-            }
-            else { return 0; }
-
-
-        }
-        return 1;
+    public static List<int> SkipAt(List<int> source, int indexToSkip)
+    {
+        return source.Where((value, index) => index != indexToSkip).ToList();
     }
 
 }
